@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Espaço de Leitura Digital</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS do projeto -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR DESKTOP
+    ========================== -->
+
+    <aside class="sidebar d-none d-lg-flex">
+
+        <div class="brand">
+
+            <img
+                src="assets/img/AF_InstitutoJanela_Logo_RGB_VER_NEG1.jpg"
+                alt="Instituto Janela para o Mundo"
+                class="logo-instituto"
+            >
+
+            <div class="system-name">
+
+                <strong>
+                    Espaço de Leitura Digital
+                </strong>
+
+                <span>
+                    Gestão de acervo e empréstimos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item active"
+            >
+                <i class="bi bi-grid-1x2-fill"></i>
+                Dashboard
+            </a>
+
+
+            <a
+                href="acervo.html"
+                class="menu-item"
+            >
+                <i class="bi bi-book"></i>
+                Acervo
+            </a>
+
+
+            <a
+                href="leitores.html"
+                class="menu-item"
+            >
+                <i class="bi bi-people"></i>
+                Leitores
+            </a>
+
+
+            <a
+                href="emprestimos.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-up-right-circle"></i>
+                Empréstimos
+            </a>
+
+
+            <a
+                href="devolucoes.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-down-left-circle"></i>
+                Devoluções
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <span>
+                Instituto Janela para o Mundo
+            </span>
+
+            <small>
+                Espaço de Leitura Digital
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MENU MOBILE
+    ========================== -->
+
+    <div
+        class="offcanvas offcanvas-start sidebar-mobile"
+        tabindex="-1"
+        id="menuMobile"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5>
+                Espaço de Leitura Digital
+            </h5>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+            ></button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <nav class="menu">
+
+                <a
+                    href="dashboard.html"
+                    class="menu-item active"
+                >
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+
+                <a
+                    href="acervo.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-book"></i>
+                    Acervo
+                </a>
+
+                <a
+                    href="leitores.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-people"></i>
+                    Leitores
+                </a>
+
+                <a
+                    href="emprestimos.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-up-right-circle"></i>
+                    Empréstimos
+                </a>
+
+                <a
+                    href="devolucoes.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-down-left-circle"></i>
+                    Devoluções
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button
+                    class="btn btn-menu-mobile d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#menuMobile"
+                >
+                    <i class="bi bi-list"></i>
+                </button>
+
+
+                <div>
+
+                    <h1>
+                        Espaço de Leitura Digital
+                    </h1>
+
+                    <p>
+                        Acompanhe e gerencie as atividades do espaço de leitura.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    SC
+                </div>
+
+
+                <div class="d-none d-md-block">
+
+                    <strong>
+                        Silvia
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+
+                <i class="bi bi-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             CABEÇALHO DA PÁGINA
+        ========================== -->
+
+        <section class="page-header">
+
+            <div>
+
+                <span class="page-eyebrow">
+                    Dashboard
+                </span>
+
+                <h2>
+                    Visão geral
+                </h2>
+
+                <p>
+                    Informações atuais sobre o acervo e a circulação dos livros.
+                </p>
+
+            </div>
+
+
+            <a
+                href="emprestimos.html"
+                class="btn btn-primary-custom"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Novo empréstimo
+            </a>
+
+        </section>
+
+
+
+        <!-- =========================
+             CARDS
+        ========================== -->
+
+        <section class="row g-4 mb-4">
+
+
+            <!-- TOTAL -->
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-blue">
+                        <i class="bi bi-bookshelf"></i>
+                    </div>
+
+
+                    <div class="stat-content">
+
+                        <span class="stat-label">
+                            Total de livros
+                        </span>
+
+                        <strong class="stat-number">
+                            486
+                        </strong>
+
+                        <small>
+                            cadastrados no acervo
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DISPONÍVEIS -->
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+
+
+                    <div class="stat-content">
+
+                        <span class="stat-label">
+                            Disponíveis
+                        </span>
+
+                        <strong class="stat-number color-green">
+                            418
+                        </strong>
+
+                        <small>
+                            disponíveis para empréstimo
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMPRESTADOS -->
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-purple">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+
+
+                    <div class="stat-content">
+
+                        <span class="stat-label">
+                            Emprestados
+                        </span>
+
+                        <strong class="stat-number color-purple">
+                            68
+                        </strong>
+
+                        <small>
+                            livros em circulação
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ATRASADOS -->
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-pink">
+                        <i class="bi bi-exclamation-circle"></i>
+                    </div>
+
+
+                    <div class="stat-content">
+
+                        <span class="stat-label">
+                            Em atraso
+                        </span>
+
+                        <strong class="stat-number color-pink">
+                            7
+                        </strong>
+
+                        <small>
+                            necessitam acompanhamento
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             ÁREA PRINCIPAL
+        ========================== -->
+
+        <section class="row g-4">
+
+
+            <!-- EMPRÉSTIMOS RECENTES -->
+
+            <div class="col-xl-8">
+
+                <div class="content-card">
+
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Empréstimos recentes
+                            </h3>
+
+                            <p>
+                                Últimas movimentações registradas no sistema.
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="emprestimos.html"
+                            class="link-custom"
+                        >
+                            Ver todos
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="table-responsive">
+
+                        <table class="table custom-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Leitor</th>
+                                    <th>Livro</th>
+                                    <th>Empréstimo</th>
+                                    <th>Devolução</th>
+                                    <th>Status</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="reader">
+
+                                            <div class="reader-avatar">
+                                                AS
+                                            </div>
+
+                                            <span>
+                                                Ana Souza
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        O Pequeno Príncipe
+                                    </td>
+
+
+                                    <td>
+                                        19/09/2026
+                                    </td>
+
+
+                                    <td>
+                                        03/10/2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="badge-status badge-purple">
+                                            Emprestado
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="reader">
+
+                                            <div class="reader-avatar">
+                                                JP
+                                            </div>
+
+                                            <span>
+                                                João Pedro
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        Extraordinário
+                                    </td>
+
+
+                                    <td>
+                                        10/09/2026
+                                    </td>
+
+
+                                    <td>
+                                        24/09/2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="badge-status badge-purple">
+                                            Emprestado
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="reader">
+
+                                            <div class="reader-avatar">
+                                                MC
+                                            </div>
+
+                                            <span>
+                                                Maria Clara
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        Coraline
+                                    </td>
+
+
+                                    <td>
+                                        01/09/2026
+                                    </td>
+
+
+                                    <td>
+                                        15/09/2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="badge-status badge-pink">
+                                            Em atraso
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AÇÕES RÁPIDAS -->
+
+            <div class="col-xl-4">
+
+                <div class="content-card">
+
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Ações rápidas
+                            </h3>
+
+                            <p>
+                                Acesse as funções mais utilizadas.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="quick-actions">
+
+
+                        <a
+                            href="acervo.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-icon icon-green">
+                                <i class="bi bi-book"></i>
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Cadastrar livro
+                                </strong>
+
+                                <span>
+                                    Adicionar uma obra ao acervo
+                                </span>
+
+                            </div>
+
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a
+                            href="leitores.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-icon icon-purple">
+                                <i class="bi bi-person-plus"></i>
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Cadastrar leitor
+                                </strong>
+
+                                <span>
+                                    Adicionar novo leitor
+                                </span>
+
+                            </div>
+
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a
+                            href="emprestimos.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-icon icon-blue">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Novo empréstimo
+                                </strong>
+
+                                <span>
+                                    Registrar saída de exemplar
+                                </span>
+
+                            </div>
+
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a
+                            href="devolucoes.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-icon icon-yellow">
+                                <i class="bi bi-arrow-down-left"></i>
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Registrar devolução
+                                </strong>
+
+                                <span>
+                                    Registrar retorno do exemplar
+                                </span>
+
+                            </div>
+
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>
+            © 2026 Instituto Janela para o Mundo · Espaço de Leitura Digital
+        </p>
+    </footer>
+
+    <!-- Bootstrap -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
