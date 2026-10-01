@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Acervo | Espaço de Leitura Digital</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar d-none d-lg-flex">
+
+        <div class="brand">
+
+            <img
+                src="assets/img/AF_InstitutoJanela_Logo_RGB_VER_NEG1.jpg"
+                alt="Instituto Janela para o Mundo"
+                class="logo-instituto"
+            >
+
+            <div class="system-name">
+
+                <strong>
+                    Espaço de Leitura Digital
+                </strong>
+
+                <span>
+                    Gestão de acervo e empréstimos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item"
+            >
+                <i class="bi bi-grid-1x2-fill"></i>
+                Dashboard
+            </a>
+
+
+            <a
+                href="acervo.html"
+                class="menu-item active"
+            >
+                <i class="bi bi-book"></i>
+                Acervo
+            </a>
+
+
+            <a
+                href="leitores.html"
+                class="menu-item"
+            >
+                <i class="bi bi-people"></i>
+                Leitores
+            </a>
+
+
+            <a
+                href="emprestimos.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-up-right-circle"></i>
+                Empréstimos
+            </a>
+
+
+            <a
+                href="devolucoes.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-down-left-circle"></i>
+                Devoluções
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <span>
+                Instituto Janela para o Mundo
+            </span>
+
+            <small>
+                Espaço de Leitura Digital
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MENU MOBILE
+    ========================== -->
+
+    <div
+        class="offcanvas offcanvas-start sidebar-mobile"
+        tabindex="-1"
+        id="menuMobile"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5>
+                Espaço de Leitura Digital
+            </h5>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+            ></button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <nav class="menu">
+
+                <a
+                    href="dashboard.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+
+
+                <a
+                    href="acervo.html"
+                    class="menu-item active"
+                >
+                    <i class="bi bi-book"></i>
+                    Acervo
+                </a>
+
+
+                <a
+                    href="leitores.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-people"></i>
+                    Leitores
+                </a>
+
+
+                <a
+                    href="emprestimos.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-up-right-circle"></i>
+                    Empréstimos
+                </a>
+
+
+                <a
+                    href="devolucoes.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-down-left-circle"></i>
+                    Devoluções
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button
+                    class="btn btn-menu-mobile d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#menuMobile"
+                >
+                    <i class="bi bi-list"></i>
+                </button>
+
+
+                <div>
+
+                    <h1>
+                        Espaço de Leitura Digital
+                    </h1>
+
+                    <p>
+                        Gestão e organização do acervo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    SC
+                </div>
+
+                <div class="d-none d-md-block">
+
+                    <strong>
+                        Silvia
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+                <i class="bi bi-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             TÍTULO
+        ========================== -->
+
+        <section class="page-header">
+
+            <div>
+
+                <span class="page-eyebrow">
+                    Biblioteca
+                </span>
+
+                <h2>
+                    Acervo
+                </h2>
+
+                <p>
+                    Consulte, organize e gerencie os livros e exemplares
+                    disponíveis no espaço de leitura.
+                </p>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#modalLivro"
+            >
+
+                <i class="bi bi-plus-lg"></i>
+
+                Novo livro
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =========================
+             INDICADORES
+        ========================== -->
+
+        <section class="row g-3 mb-4">
+
+            <div class="col-md-4">
+
+                <div class="mini-stat">
+
+                    <div class="mini-stat-icon icon-blue">
+                        <i class="bi bi-book"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Obras cadastradas
+                        </span>
+
+                        <strong id="totalObras">
+                            4
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="mini-stat">
+
+                    <div class="mini-stat-icon icon-green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Exemplares disponíveis
+                        </span>
+
+                        <strong
+                            id="totalDisponiveis"
+                            class="color-green"
+                        >
+                            8
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="mini-stat">
+
+                    <div class="mini-stat-icon icon-purple">
+                        <i class="bi bi-collection"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total de exemplares
+                        </span>
+
+                        <strong
+                            id="totalExemplares"
+                            class="color-purple"
+                        >
+                            12
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             PESQUISA E FILTROS
+        ========================== -->
+
+        <section class="content-card mb-4">
+
+            <div class="filters-wrapper">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        id="campoBusca"
+                        placeholder="Buscar por título ou autor..."
+                    >
+
+                </div>
+
+
+                <select
+                    id="filtroCategoria"
+                    class="form-select filter-select"
+                >
+
+                    <option value="">
+                        Todas as categorias
+                    </option>
+
+                    <option value="Literatura">
+                        Literatura
+                    </option>
+
+                    <option value="Infantojuvenil">
+                        Infantojuvenil
+                    </option>
+
+                    <option value="Fantasia">
+                        Fantasia
+                    </option>
+
+                    <option value="Aventura">
+                        Aventura
+                    </option>
+
+                </select>
+
+
+                <select
+                    id="filtroStatus"
+                    class="form-select filter-select"
+                >
+
+                    <option value="">
+                        Todos os status
+                    </option>
+
+                    <option value="Disponível">
+                        Disponível
+                    </option>
+
+                    <option value="Emprestado">
+                        Emprestado
+                    </option>
+
+                    <option value="Indisponível">
+                        Indisponível
+                    </option>
+
+                </select>
+
+                <select
+                    id="filtroCentro"
+                    class="form-select filter-select"
+                >
+
+                    <option value="">
+                        Todos os Centros
+                    </option>
+
+                    <option value="CE Maranhão">
+                        CE Maranhão
+                    </option>
+
+                    <option value="CE Piauí">
+                        CE Piauí
+                    </option>
+
+                    <option value="CE Bahia">
+                        CE Bahia
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             TABELA
+        ========================== -->
+
+        <section class="content-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h3>
+                        Livros cadastrados
+                    </h3>
+
+                    <p>
+                        Visualize as obras e a situação dos seus exemplares.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table custom-table acervo-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Livro</th>
+
+                            <th>Categoria</th>
+
+                            <th>Centro</th>
+
+                            <th>Exemplares</th>
+
+                            <th>Disponíveis</th>
+
+                            <th>Status</th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelaAcervo">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <p>
+                © 2026 Instituto Janela para o Mundo ·
+                Espaço de Leitura Digital
+            </p>
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL NOVO LIVRO
+    ====================================================== -->
+
+    <div
+        class="modal fade"
+        id="modalLivro"
+        tabindex="-1"
+    >
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content custom-modal">
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h5 class="modal-title">
+                            Cadastrar novo livro
+                        </h5>
+
+                        <p>
+                            Insira as principais informações da obra.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                    ></button>
+
+                </div>
+
+
+                <form id="formLivro">
+
+
+                    <div class="modal-body">
+
+                        <div class="row g-3">
+
+
+                            <div class="col-md-8">
+
+                                <label
+                                    for="tituloLivro"
+                                    class="form-label"
+                                >
+                                    Título *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="tituloLivro"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="isbnLivro"
+                                    class="form-label"
+                                >
+                                    ISBN
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="isbnLivro"
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="autorLivro"
+                                    class="form-label"
+                                >
+                                    Autor *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="autorLivro"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="editoraLivro"
+                                    class="form-label"
+                                >
+                                    Editora
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="editoraLivro"
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="categoriaLivro"
+                                    class="form-label"
+                                >
+                                    Categoria *
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="categoriaLivro"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Literatura">
+                                        Literatura
+                                    </option>
+
+                                    <option value="Infantojuvenil">
+                                        Infantojuvenil
+                                    </option>
+
+                                    <option value="Fantasia">
+                                        Fantasia
+                                    </option>
+
+                                    <option value="Aventura">
+                                        Aventura
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="anoLivro"
+                                    class="form-label"
+                                >
+                                    Ano
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="anoLivro"
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="quantidadeLivro"
+                                    class="form-label"
+                                >
+                                    Quantidade de exemplares *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value="1"
+                                    class="form-control"
+                                    id="quantidadeLivro"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="centroLivro"
+                                    class="form-label"
+                                >
+                                    Centro de Educação *
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="centroLivro"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione o Centro
+                                    </option>
+
+                                    <option value="CE Maranhão">
+                                        CE Maranhão
+                                    </option>
+
+                                    <option value="CE Piauí">
+                                        CE Piauí
+                                    </option>
+
+                                    <option value="CE Bahia">
+                                        CE Bahia
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-8">
+
+                                <label
+                                    for="localizacaoLivro"
+                                    class="form-label"
+                                >
+                                    Localização
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="localizacaoLivro"
+                                    placeholder="Ex.: Estante 2 - Prateleira B"
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="faixaLivro"
+                                    class="form-label"
+                                >
+                                    Faixa etária
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="faixaLivro"
+                                    placeholder="Ex.: 10 a 14 anos"
+                                >
+
+                            </div>
+
+
+
+                            <div class="col-12">
+
+                                <label
+                                    for="sinopseLivro"
+                                    class="form-label"
+                                >
+                                    Sinopse
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="sinopseLivro"
+                                    rows="3"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary-custom"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary-custom"
+                        >
+
+                            <i class="bi bi-check-lg"></i>
+
+                            Cadastrar livro
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Bootstrap -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- JS -->
+
+    <script src="js/acervo.js"></script>
+
+</body>
+
+</html>
