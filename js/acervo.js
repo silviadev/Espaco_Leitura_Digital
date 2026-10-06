@@ -4,223 +4,9 @@
 ========================================================= */
 
 
-/* =========================================================
-   DADOS INICIAIS
-   Cada LIVRO possui seus EXEMPLARES físicos.
-========================================================= */
-
-const livros = [
-
-    {
-        id: 1,
-
-        titulo: "O Pequeno Príncipe",
-
-        autor: "Antoine de Saint-Exupéry",
-
-        isbn: "9788595081512",
-
-        editora: "HarperCollins",
-
-        ano: 2018,
-
-        categoria: "Literatura",
-
-        faixaEtaria: "Livre",
-
-        sinopse:
-            "Uma história sobre amizade, responsabilidade e descobertas.",
-
-        exemplares: [
-
-            {
-                id: 1,
-                codigo: "EX-0001",
-                centro: "CE Maranhão",
-                localizacao: "Estante 1 - Prateleira A",
-                status: "Disponível"
-            },
-
-            {
-                id: 2,
-                codigo: "EX-0002",
-                centro: "CE Maranhão",
-                localizacao: "Estante 1 - Prateleira A",
-                status: "Emprestado"
-            },
-
-            {
-                id: 3,
-                codigo: "EX-0003",
-                centro: "CE Piauí",
-                localizacao: "Estante 2 - Prateleira B",
-                status: "Disponível"
-            },
-
-            {
-                id: 4,
-                codigo: "EX-0004",
-                centro: "CE Bahia",
-                localizacao: "Estante 1 - Prateleira C",
-                status: "Disponível"
-            }
-
-        ]
-    },
-
-
-    {
-        id: 2,
-
-        titulo: "Extraordinário",
-
-        autor: "R. J. Palacio",
-
-        isbn: "9788580573015",
-
-        editora: "Intrínseca",
-
-        ano: 2013,
-
-        categoria: "Infantojuvenil",
-
-        faixaEtaria: "10 a 14 anos",
-
-        sinopse:
-            "A história de Auggie e sua experiência ao frequentar a escola.",
-
-        exemplares: [
-
-            {
-                id: 5,
-                codigo: "EX-0005",
-                centro: "CE Maranhão",
-                localizacao: "Estante 3 - Prateleira A",
-                status: "Disponível"
-            },
-
-            {
-                id: 6,
-                codigo: "EX-0006",
-                centro: "CE Piauí",
-                localizacao: "Estante 1 - Prateleira B",
-                status: "Disponível"
-            },
-
-            {
-                id: 7,
-                codigo: "EX-0007",
-                centro: "CE Bahia",
-                localizacao: "Estante 2 - Prateleira A",
-                status: "Emprestado"
-            }
-
-        ]
-    },
-
-
-    {
-        id: 3,
-
-        titulo: "Coraline",
-
-        autor: "Neil Gaiman",
-
-        isbn: "9788551006757",
-
-        editora: "Intrínseca",
-
-        ano: 2020,
-
-        categoria: "Fantasia",
-
-        faixaEtaria: "12 anos ou mais",
-
-        sinopse:
-            "Coraline descobre uma passagem para uma realidade aparentemente perfeita.",
-
-        exemplares: [
-
-            {
-                id: 8,
-                codigo: "EX-0008",
-                centro: "CE Maranhão",
-                localizacao: "Estante 4 - Prateleira A",
-                status: "Emprestado"
-            },
-
-            {
-                id: 9,
-                codigo: "EX-0009",
-                centro: "CE Piauí",
-                localizacao: "Estante 4 - Prateleira B",
-                status: "Emprestado"
-            }
-
-        ]
-    },
-
-
-    {
-        id: 4,
-
-        titulo: "O Menino Maluquinho",
-
-        autor: "Ziraldo",
-
-        isbn: "9788506055108",
-
-        editora: "Melhoramentos",
-
-        ano: 2005,
-
-        categoria: "Infantojuvenil",
-
-        faixaEtaria: "8 a 12 anos",
-
-        sinopse:
-            "As aventuras e descobertas de um menino alegre, criativo e cheio de imaginação.",
-
-        exemplares: [
-
-            {
-                id: 10,
-                codigo: "EX-0010",
-                centro: "CE Maranhão",
-                localizacao: "Estante 2 - Prateleira A",
-                status: "Disponível"
-            },
-
-            {
-                id: 11,
-                codigo: "EX-0011",
-                centro: "CE Piauí",
-                localizacao: "Estante 3 - Prateleira A",
-                status: "Disponível"
-            },
-
-            {
-                id: 12,
-                codigo: "EX-0012",
-                centro: "CE Bahia",
-                localizacao: "Estante 3 - Prateleira B",
-                status: "Disponível"
-            }
-
-        ]
-    }
-
-];
-
-
-
-/* =========================================================
-   CONTADOR DE EXEMPLARES
-========================================================= */
-
-let proximoIdExemplar = 13;
-
-
+// O banco é a fonte dos dados. Este array é apenas a cópia usada na tela.
+let livros = [];
+let acervoCarregado = false;
 
 /* =========================================================
    ELEMENTOS DO HTML
@@ -405,56 +191,14 @@ function textoCentrosLivro(livro) {
     ao filtro de status escolhido.
 */
 
-function correspondeAoStatus(
-    livro,
-    statusSelecionado
-) {
-
+function correspondeAoStatus(livro, statusSelecionado) {
+    // Sem filtro, todas as obras podem aparecer.
     if (statusSelecionado === "") {
-
         return true;
-
     }
 
-
-    if (statusSelecionado === "Disponível") {
-
-        return livro.exemplares.some(
-
-            exemplar =>
-                exemplar.status === "Disponível"
-
-        );
-
-    }
-
-
-    if (statusSelecionado === "Emprestado") {
-
-        return livro.exemplares.some(
-
-            exemplar =>
-                exemplar.status === "Emprestado"
-
-        );
-
-    }
-
-
-    if (statusSelecionado === "Indisponível") {
-
-        return !livro.exemplares.some(
-
-            exemplar =>
-                exemplar.status === "Disponível"
-
-        );
-
-    }
-
-
-    return true;
-
+    // Usa a mesma classificação exibida no status da tabela.
+    return descobrirStatusLivro(livro) === statusSelecionado;
 }
 
 
@@ -466,6 +210,9 @@ function correspondeAoStatus(
 function renderizarLivros(lista) {
 
     tabela.innerHTML = "";
+
+    // Os indicadores devem mudar mesmo quando os filtros deixam a tabela vazia.
+    atualizarIndicadores();
 
 
     if (lista.length === 0) {
@@ -488,7 +235,7 @@ function renderizarLivros(lista) {
 
                     </div>
 
-                    Nenhum livro encontrado.
+                    ${livros.length === 0 ? "Nenhum livro cadastrado. Clique em Novo livro para começar." : "Nenhum livro encontrado para os filtros selecionados."}
 
                 </td>
 
@@ -545,11 +292,11 @@ function renderizarLivros(lista) {
                     <div>
 
                         <strong>
-                            ${livro.titulo}
+                            
                         </strong>
 
                         <span>
-                            ${livro.autor}
+                            
                         </span>
 
                     </div>
@@ -564,7 +311,7 @@ function renderizarLivros(lista) {
 
                 <span class="category-badge">
 
-                    ${livro.categoria}
+                    
 
                 </span>
 
@@ -573,10 +320,10 @@ function renderizarLivros(lista) {
 
 
             <td
-                title="${centros.join(", ")}"
+                class="centros-livro"
             >
 
-                ${textoCentrosLivro(livro)}
+                
 
             </td>
 
@@ -620,6 +367,8 @@ function renderizarLivros(lista) {
                 <button
                     class="table-action"
                     title="Visualizar livro"
+                    aria-label="Visualizar livro"
+                    data-livro-id="${livro.id}"
                     onclick="visualizarLivro(${livro.id})"
                 >
 
@@ -631,6 +380,8 @@ function renderizarLivros(lista) {
                 <button
                     class="table-action"
                     title="Editar livro"
+                    aria-label="Editar livro"
+                    data-editar-livro-id="${livro.id}"
                     onclick="editarLivro(${livro.id})"
                 >
 
@@ -643,12 +394,36 @@ function renderizarLivros(lista) {
         `;
 
 
+        linha.querySelector(".centros-livro").textContent = textoCentrosLivro(livro);
+        linha.querySelector(".centros-livro").title = centros.join(", ");
+        linha.querySelector(".book-info strong").textContent = livro.titulo;
+        linha.querySelector(".book-info span").textContent = livro.autor;
+        linha.querySelector(".category-badge").textContent = livro.categoria;
+
+        // A capa é inserida como elemento, sem transformar o link em HTML.
+        if (livro.capaUrl) {
+            const espacoCapa = linha.querySelector(".book-cover");
+            const imagem = document.createElement("img");
+
+            imagem.alt = `Capa de ${livro.titulo}`;
+            imagem.loading = "lazy";
+            imagem.referrerPolicy = "no-referrer";
+
+            // Se o endereço não carregar uma imagem, recuperamos o ícone.
+            imagem.addEventListener("error", function () {
+                const icone = document.createElement("i");
+                icone.className = "bi bi-book";
+                espacoCapa.replaceChildren(icone);
+            }, { once: true });
+
+            imagem.src = livro.capaUrl;
+            espacoCapa.replaceChildren(imagem);
+        }
+
         tabela.appendChild(linha);
 
     });
 
-
-    atualizarIndicadores();
 
 }
 
@@ -716,6 +491,7 @@ function atualizarIndicadores() {
 ========================================================= */
 
 function aplicarFiltros() {
+    if (!acervoCarregado) return;
 
     const busca =
         campoBusca.value
@@ -893,420 +669,361 @@ if (filtroCentro) {
 
 
 /* =========================================================
-   GERAR CÓDIGO DO EXEMPLAR
+   COMUNICAÇÃO COM A API
 ========================================================= */
-
-function gerarCodigoExemplar() {
-
-    const codigo =
-        `EX-${String(
-            proximoIdExemplar
-        ).padStart(4, "0")}`;
-
-
-    proximoIdExemplar++;
-
-
-    return codigo;
-
+async function requisitarApi(caminho, metodo = "GET", dados) {
+    let resposta;
+    try {
+        resposta = await fetch(`/api${caminho}`, {
+            method: metodo,
+            headers: dados ? { "Content-Type": "application/json" } : {},
+            body: dados ? JSON.stringify(dados) : undefined,
+            signal: AbortSignal.timeout(15000)
+        });
+    } catch {
+        throw new Error(metodo === "GET"
+            ? "Não foi possível conectar. Abra o acervo pelo servidor em http://127.0.0.1:3001/acervo.html."
+            : "Não foi possível confirmar o salvamento. Atualize o acervo antes de tentar novamente, para verificar se os dados foram gravados.");
+    }
+    let resultado;
+    try { resultado = await resposta.json(); }
+    catch { throw new Error("Resposta inesperada. Abra o acervo em http://127.0.0.1:3001/acervo.html."); }
+    if (!resposta.ok) {
+        if (resposta.status === 503) {
+            throw new Error("O banco de dados não está respondendo. Verifique o serviço PostgreSQL e tente novamente.");
+        }
+        throw new Error(resultado.erro || "Não foi possível concluir a operação.");
+    }
+    return resultado;
 }
 
+function atualizarObraNaTela(livro) {
+    const indice = livros.findIndex(item => item.id === livro.id);
+    if (indice === -1) livros.push(livro);
+    else livros[indice] = livro;
+    aplicarFiltros();
+}
 
+// Desabilitar controles evita envios repetidos enquanto o servidor responde.
+function bloquearFormulario(form, bloqueado) {
+    if (bloqueado) {
+        form.dataset.salvando = "true";
+        form.querySelectorAll("input, select, textarea, button").forEach(campo => {
+            campo.dataset.desabilitadoAntes = String(campo.disabled);
+            campo.disabled = true;
+        });
+    } else {
+        delete form.dataset.salvando;
+        form.querySelectorAll("[data-desabilitado-antes]").forEach(campo => {
+            campo.disabled = campo.dataset.desabilitadoAntes === "true";
+            delete campo.dataset.desabilitadoAntes;
+        });
+    }
+}
+
+async function carregarAcervo() {
+    const aviso = document.getElementById("avisoAcervo");
+    const repetir = document.getElementById("recarregarAcervo");
+    acervoCarregado = false;
+    const controles = [campoBusca, filtroCategoria, filtroStatus, filtroCentro, document.getElementById("novoLivro")];
+    controles.forEach(c => { c.disabled = true; });
+    repetir.disabled = true;
+    repetir.hidden = true;
+    aviso.textContent = "Carregando acervo…";
+    tabela.innerHTML = '<tr><td colspan="7" class="text-center py-4">Carregando livros…</td></tr>';
+    ["totalObras", "totalExemplares", "totalDisponiveis"].forEach(id => document.getElementById(id).textContent = "—");
+    try {
+        const [obras, centros] = await Promise.all([requisitarApi("/livros"), requisitarApi("/centros")]);
+        for (const id of ["centroLivro", "centroExemplares", "filtroCentro"]) {
+            const select = document.getElementById(id);
+            const anterior = select.value;
+            select.replaceChildren(new Option(id === "filtroCentro" ? "Todos os Centros" : "Selecione o Centro", ""));
+            centros.forEach(centro => select.add(new Option(centro.nome, id === "filtroCentro" ? centro.nome : String(centro.id))));
+            if ([...select.options].some(o => o.value === anterior)) select.value = anterior;
+        }
+        livros = obras;
+        acervoCarregado = true;
+        controles.forEach(c => { c.disabled = false; });
+        aviso.textContent = "Acervo conectado. Os cadastros são salvos no banco de dados.";
+        aplicarFiltros();
+    } catch (erro) {
+        aviso.textContent = erro.message;
+        tabela.innerHTML = '<tr><td colspan="7" class="text-center py-4">Acervo não carregado. Tente novamente.</td></tr>';
+        repetir.hidden = false;
+    } finally { repetir.disabled = false; }
+}
+
+document.getElementById("recarregarAcervo").addEventListener("click", carregarAcervo);
 
 /* =========================================================
-   CADASTRAR NOVO LIVRO
+   CADASTRAR E EDITAR OS DADOS DA OBRA
 ========================================================= */
 
-formLivro.addEventListener(
-
-    "submit",
-
-    function(event) {
-
-        event.preventDefault();
-
-
-        const titulo =
-            document
-                .getElementById("tituloLivro")
-                .value
-                .trim();
-
-
-        const autor =
-            document
-                .getElementById("autorLivro")
-                .value
-                .trim();
-
-
-        const isbn =
-            document
-                .getElementById("isbnLivro")
-                .value
-                .trim();
-
-
-        const editora =
-            document
-                .getElementById("editoraLivro")
-                .value
-                .trim();
-
-
-        const categoria =
-            document
-                .getElementById("categoriaLivro")
-                .value;
-
-
-        const ano =
-            document
-                .getElementById("anoLivro")
-                .value;
-
-
-        const quantidade =
-            Number(
-
-                document
-                    .getElementById(
-                        "quantidadeLivro"
-                    )
-                    .value
-
-            );
-
-
-        const localizacao =
-            document
-                .getElementById(
-                    "localizacaoLivro"
-                )
-                .value
-                .trim();
-
-
-        const faixaEtaria =
-            document
-                .getElementById(
-                    "faixaLivro"
-                )
-                .value
-                .trim();
-
-
-        const sinopse =
-            document
-                .getElementById(
-                    "sinopseLivro"
-                )
-                .value
-                .trim();
-
-
-
-        /*
-            Centro selecionado.
-        */
-
-        const campoCentro =
-            document.getElementById(
-                "centroLivro"
-            );
-
-
-        if (!campoCentro) {
-
-            alert(
-                "O campo Centro de Educação não foi encontrado no formulário."
-            );
-
-            return;
-
-        }
-
-
-        const centro =
-            campoCentro.value;
-
-
-
-        /*
-            Validação básica.
-        */
-
-        if (
-            titulo === ""
-            ||
-            autor === ""
-            ||
-            categoria === ""
-            ||
-            centro === ""
-            ||
-            quantidade < 1
-        ) {
-
-            alert(
-                "Preencha todos os campos obrigatórios."
-            );
-
-            return;
-
-        }
-
-
-
-        /*
-            Criamos os exemplares individualmente.
-        */
-
-        const novosExemplares = [];
-
-
-        for (
-            let i = 0;
-            i < quantidade;
-            i++
-        ) {
-
-            const idExemplar =
-                proximoIdExemplar;
-
-
-            novosExemplares.push({
-
-                id: idExemplar,
-
-                codigo:
-                    gerarCodigoExemplar(),
-
-                centro:
-                    centro,
-
-                localizacao:
-                    localizacao,
-
-                status:
-                    "Disponível"
-
-            });
-
-        }
-
-
-
-        /*
-            Criamos a obra.
-        */
-
-        const novoLivro = {
-
-            id:
-                Date.now(),
-
-            titulo:
-                titulo,
-
-            autor:
-                autor,
-
-            isbn:
-                isbn,
-
-            editora:
-                editora,
-
-            ano:
-                ano,
-
-            categoria:
-                categoria,
-
-            faixaEtaria:
-                faixaEtaria,
-
-            sinopse:
-                sinopse,
-
-            exemplares:
-                novosExemplares
-
-        };
-
-
-
-        /*
-            Adiciona ao acervo.
-        */
-
-        livros.push(
-            novoLivro
-        );
-
-
-
-        /*
-            Atualiza a tabela.
-        */
-
-        aplicarFiltros();
-
-
-
-        /*
-            Limpa o formulário.
-        */
-
-        formLivro.reset();
-
-
-
-        /*
-            Como a quantidade padrão era 1,
-            colocamos novamente depois do reset.
-        */
-
-        const quantidadeInput =
-            document.getElementById(
-                "quantidadeLivro"
-            );
-
-
-        quantidadeInput.value = 1;
-
-
-
-        /*
-            Fecha o modal Bootstrap.
-        */
-
-        const modalElement =
-            document.getElementById(
-                "modalLivro"
-            );
-
-
-        const modal =
-            bootstrap.Modal.getInstance(
-                modalElement
-            );
-
-
-        if (modal) {
-
-            modal.hide();
-
-        }
-
+// null indica cadastro; um ID indica qual obra está sendo editada.
+let idLivroEmEdicao = null;
+const camposObra = {
+    titulo: "tituloLivro",
+    autor: "autorLivro",
+    isbn: "isbnLivro",
+    editora: "editoraLivro",
+    categoria: "categoriaLivro",
+    ano: "anoLivro",
+    faixaEtaria: "faixaLivro",
+    capaUrl: "capaLivro",
+    sinopse: "sinopseLivro"
+};
+
+function prepararFormularioLivro(livro = null) {
+    formLivro.reset();
+    idLivroEmEdicao = livro ? livro.id : null;
+    const editando = livro !== null;
+    document.getElementById("erroFormularioLivro").textContent = "";
+    document.getElementById("tituloFormularioLivro").textContent =
+        editando ? "Editar livro" : "Cadastrar novo livro";
+    document.getElementById("textoSalvarLivro").textContent =
+        editando ? "Salvar alterações" : "Cadastrar livro";
+    document.getElementById("descricaoFormularioLivro").textContent = editando
+        ? "Atualize os dados da obra. Para incluir cópias, use Adicionar exemplares nos detalhes."
+        : "Insira as principais informações da obra.";
+
+    // Centro e localização pertencem às cópias físicas, não aos dados da obra.
+    ["quantidadeLivro", "centroLivro", "localizacaoLivro"].forEach(idCampo => {
+        const campo = document.getElementById(idCampo);
+        campo.disabled = editando;
+        campo.parentElement.hidden = editando;
+    });
+
+    if (editando) {
+        Object.entries(camposObra).forEach(([propriedade, idCampo]) => {
+            document.getElementById(idCampo).value = livro[propriedade] ?? "";
+        });
     }
+}
 
-);
+document.getElementById("novoLivro").addEventListener("click", function () {
+    prepararFormularioLivro();
+});
 
+formLivro.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    if (formLivro.dataset.salvando || !acervoCarregado) return;
+    const erro = document.getElementById("erroFormularioLivro");
+    erro.textContent = "";
+    if (!formLivro.reportValidity()) return;
+    const dadosObra = {};
+    Object.entries(camposObra).forEach(([propriedade, idCampo]) => {
+        dadosObra[propriedade] = document.getElementById(idCampo).value.trim();
+    });
+    if (idLivroEmEdicao === null) {
+        dadosObra.quantidade = Number(document.getElementById("quantidadeLivro").value);
+        dadosObra.centroId = Number(document.getElementById("centroLivro").value);
+        dadosObra.localizacao = document.getElementById("localizacaoLivro").value.trim();
+    }
+    const id = idLivroEmEdicao;
+    let salvo = false;
+    bloquearFormulario(formLivro, true);
+    document.getElementById("textoSalvarLivro").textContent = "Salvando…";
+    try {
+        const livro = await requisitarApi(id === null ? "/livros" : `/livros/${id}`, id === null ? "POST" : "PUT", dadosObra);
+        atualizarObraNaTela(livro);
+        document.getElementById("avisoAcervo").textContent = "Livro salvo no banco de dados.";
+        salvo = true;
+    } catch (falha) {
+        erro.textContent = falha.message;
+        // O formulário é longo: trazer o erro à vista evita parecer que nada aconteceu.
+        erro.scrollIntoView({ block: "center", behavior: "smooth" });
+    } finally {
+        bloquearFormulario(formLivro, false);
+        document.getElementById("textoSalvarLivro").textContent = id === null ? "Cadastrar livro" : "Salvar alterações";
+    }
+    if (salvo) bootstrap.Modal.getOrCreateInstance(document.getElementById("modalLivro")).hide();
+});
 
 
 /* =========================================================
    VISUALIZAR LIVRO
-   Temporário.
-   Depois criaremos um modal próprio.
+   Preenche o mesmo modal a cada clique no botão de visualizar.
 ========================================================= */
 
-function visualizarLivro(id) {
+function preencherDetalhesLivro(livro) {
+    // textContent exibe os dados como texto, sem interpretá-los como HTML.
+    const campos = {
+        tituloDetalhesLivro: livro.titulo,
+        detalhesAutorLivro: livro.autor,
+        detalhesCategoriaLivro: livro.categoria,
+        detalhesIsbnLivro: livro.isbn || "Não informado",
+        detalhesEditoraLivro: livro.editora || "Não informada",
+        detalhesAnoLivro: livro.ano || "Não informado",
+        detalhesFaixaLivro: livro.faixaEtaria || "Não informada",
+        detalhesSinopseLivro: livro.sinopse || "Sinopse não informada."
+    };
 
-    const livro =
-        livros.find(
+    Object.entries(campos).forEach(([idCampo, valor]) => {
+        document.getElementById(idCampo).textContent = valor;
+    });
 
-            livro =>
-                livro.id === id
+    // Limpa a capa anterior para não mostrar a imagem de outra obra.
+    const capa = document.getElementById("detalhesCapaLivro");
+    function mostrarCapaPadrao() {
+        const icone = document.createElement("i");
+        icone.className = "bi bi-book";
+        icone.setAttribute("aria-hidden", "true");
+        const legenda = document.createElement("span");
+        legenda.textContent = "Capa indisponível";
+        capa.replaceChildren(icone, legenda);
+    }
+    mostrarCapaPadrao();
 
-        );
-
-
-    if (!livro) {
-
-        return;
-
+    if (livro.capaUrl) {
+        const imagem = document.createElement("img");
+        imagem.alt = `Capa de ${livro.titulo}`;
+        imagem.referrerPolicy = "no-referrer";
+        imagem.addEventListener("error", function () {
+            // Uma imagem antiga não pode substituir a capa do próximo livro.
+            if (capa.contains(imagem)) mostrarCapaPadrao();
+        }, { once: true });
+        imagem.src = livro.capaUrl;
+        capa.replaceChildren(imagem);
     }
 
+    // Os totais são calculados a partir dos exemplares, sem duplicar dados.
+    const total = livro.exemplares.length;
+    const disponiveis = exemplaresDisponiveis(livro).length;
+    document.getElementById("detalhesResumoLivro").textContent =
+        `Total: ${total} · Disponíveis: ${disponiveis} · Emprestados: ${exemplaresEmprestados(livro).length}`;
 
-    let textoExemplares = "";
+    const lista = document.getElementById("detalhesExemplaresLivro");
+    lista.replaceChildren();
 
+    // Cada objeto do array de exemplares vira uma linha na tabela.
+    livro.exemplares.forEach(exemplar => {
+        const linha = document.createElement("tr");
+        const valores = [
+            exemplar.codigo,
+            exemplar.centro || "Não informado",
+            exemplar.localizacao || "Não informada"
+        ];
 
-    livro.exemplares.forEach(
+        valores.forEach(valor => {
+            const celula = document.createElement("td");
+            celula.textContent = valor;
+            linha.appendChild(celula);
+        });
 
-        exemplar => {
+        const celulaStatus = document.createElement("td");
+        const etiqueta = document.createElement("span");
+        etiqueta.className = `badge-status ${classeStatus(exemplar.status)}`;
+        etiqueta.textContent = exemplar.status || "Não informado";
+        celulaStatus.appendChild(etiqueta);
+        linha.appendChild(celulaStatus);
+        lista.appendChild(linha);
+    });
 
-            textoExemplares += `
-
-${exemplar.codigo}
-Centro: ${exemplar.centro}
-Localização: ${exemplar.localizacao || "Não informada"}
-Status: ${exemplar.status}
-
-----------------------------`;
-
-        }
-
-    );
-
-
-    alert(
-
-`${livro.titulo}
-
-Autor: ${livro.autor}
-Categoria: ${livro.categoria}
-ISBN: ${livro.isbn || "Não informado"}
-
-Total de exemplares: ${livro.exemplares.length}
-
-EXEMPLARES
-${textoExemplares}`
-
-    );
+    if (total === 0) {
+        const linha = document.createElement("tr");
+        const celula = document.createElement("td");
+        celula.colSpan = 4;
+        celula.className = "text-center py-4";
+        celula.textContent = "Nenhum exemplar cadastrado para esta obra.";
+        linha.appendChild(celula);
+        lista.appendChild(linha);
+    }
 
 }
 
+// Abrir o modal é separado de atualizar seus dados para não perder o foco ao salvar.
+function visualizarLivro(id) {
+    const livro = livros.find(livro => livro.id === id);
+    if (!livro) return;
+
+    const form = document.getElementById("formExemplares");
+    form.reset();
+    // Guarda apenas o ID da obra que receberá as novas cópias.
+    form.dataset.livroId = String(id);
+    document.getElementById("painelNovosExemplares").open = false;
+    document.getElementById("erroExemplares").textContent = "";
+    document.getElementById("sucessoExemplares").textContent = "";
+    preencherDetalhesLivro(livro);
+
+    const modalElement = document.getElementById("modalDetalhesLivro");
+    modalElement.addEventListener("hidden.bs.modal", function () {
+        // A tabela pode ter sido recriada, por isso procuramos o botão novamente.
+        const botao = document.querySelector(`button[data-livro-id="${id}"]`);
+        (botao || campoBusca).focus();
+    }, { once: true });
+    bootstrap.Modal.getOrCreateInstance(modalElement).show();
+}
+
+/* =========================================================
+   ADICIONAR EXEMPLARES A UMA OBRA EXISTENTE
+========================================================= */
+const formExemplares = document.getElementById("formExemplares");
+
+formExemplares.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    if (formExemplares.dataset.salvando) return;
+    const erro = document.getElementById("erroExemplares");
+    const sucesso = document.getElementById("sucessoExemplares");
+    erro.textContent = "";
+    sucesso.textContent = "";
+    if (!formExemplares.reportValidity()) return;
+    const id = Number(formExemplares.dataset.livroId);
+    const dados = {
+        quantidade: Number(document.getElementById("quantidadeExemplares").value),
+        centroId: Number(document.getElementById("centroExemplares").value),
+        localizacao: document.getElementById("localizacaoExemplares").value.trim()
+    };
+    bloquearFormulario(formExemplares, true);
+    const botao = formExemplares.querySelector('[type="submit"]');
+    botao.textContent = "Salvando…";
+    try {
+        const livro = await requisitarApi(`/livros/${id}/exemplares`, "POST", dados);
+        atualizarObraNaTela(livro);
+        preencherDetalhesLivro(livro);
+        formExemplares.reset();
+        sucesso.textContent = `${dados.quantidade} ${dados.quantidade === 1 ? "exemplar salvo" : "exemplares salvos"} no banco de dados.`;
+    } catch (falha) { erro.textContent = falha.message; }
+    finally {
+        bloquearFormulario(formExemplares, false);
+        botao.textContent = "Salvar exemplares";
+    }
+});
+
+document.getElementById("cancelarExemplares").addEventListener("click", function () {
+    formExemplares.reset();
+    document.getElementById("erroExemplares").textContent = "";
+    document.getElementById("sucessoExemplares").textContent = "";
+    const painel = document.getElementById("painelNovosExemplares");
+    painel.open = false;
+    painel.querySelector("summary").focus();
+});
 
 
 /* =========================================================
-   EDITAR LIVRO
-   Será desenvolvido posteriormente.
+   ABRIR O FORMULÁRIO NO MODO DE EDIÇÃO
 ========================================================= */
-
 function editarLivro(id) {
-
-    const livro =
-        livros.find(
-
-            livro =>
-                livro.id === id
-
-        );
-
-
-    if (!livro) {
-
-        return;
-
-    }
-
-
-    alert(
-
-        `A edição de "${livro.titulo}" será implementada na próxima etapa.`
-
-    );
-
+    const livro = livros.find(livro => livro.id === id);
+    if (!livro) return;
+    prepararFormularioLivro(livro);
+    const modalElement = document.getElementById("modalLivro");
+    modalElement.addEventListener("hidden.bs.modal", function () {
+        // A edição pode retirar a obra do filtro atual.
+        const botao = document.querySelector(`button[data-editar-livro-id="${id}"]`);
+        (botao || campoBusca).focus();
+    }, { once: true });
+    bootstrap.Modal.getOrCreateInstance(modalElement).show();
 }
-
 
 
 /* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
-renderizarLivros(
-    livros
-);
+// Não permite fechar um modal durante o envio e perder o contexto da resposta.
+for (const [modalId, form] of [["modalLivro", formLivro], ["modalDetalhesLivro", formExemplares]]) {
+    document.getElementById(modalId).addEventListener("hide.bs.modal", event => {
+        if (form.dataset.salvando) event.preventDefault();
+    });
+}
+carregarAcervo();
