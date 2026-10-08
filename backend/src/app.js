@@ -2,12 +2,14 @@ import express from "express";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { criarRepositorioAcervo } from "./repositories/acervo.js";
-import { validarObra, validarExemplares } from "./validation.js";
+import { validarObra, validarExemplares, validarLeitor } from "./validation.js";
+import { criarRepositorioLeitores } from './repositories/leitores.js';
 
 // Receber o banco como argumento permite testar as rotas sem um PostgreSQL instalado.
 export function criarApp(banco, registrarErro = console.error) {
     const app = express();
     const acervo = criarRepositorioAcervo(banco);
+    const leitores = criarRepositorioLeitores(banco);
     app.disable("x-powered-by");
     app.use("/api", (req, res, next) => {
         res.set("Cache-Control", "no-store");
@@ -58,6 +60,20 @@ export function criarApp(banco, registrarErro = console.error) {
         res.status(201).json(await acervo.adicionarExemplares(Number(req.params.id), validarExemplares(req.body)));
     });
 
+    app.get('/api/leitores', async (req, res) => res.json(await leitores.listar()));
+    app.get('/api/leitores/:id', async (req, res) => {
+        const leitor = await leitores.buscar(Number(req.params.id));
+        if (!leitor) return res.status(404).json({ erro: 'Leitor não encontrado.' });
+        res.json(leitor);
+    });
+    app.post('/api/leitores', async (req, res) => {
+        const leitor = await leitores.salvar(validarLeitor(req.body));
+        res.status(201).location(`/api/leitores/${leitor.id}`).json(leitor);
+    });
+    app.put('/api/leitores/:id', async (req, res) => {
+        res.json(await leitores.salvar(validarLeitor(req.body), Number(req.params.id)));
+    });
+
     // Servimos apenas os arquivos públicos. Nunca expor a raiz ou backend/.env.
     const raiz = fileURLToPath(new URL("../../", import.meta.url));
     app.get("/", (req, res) => res.redirect("/acervo.html"));
@@ -72,7 +88,7 @@ export function criarApp(banco, registrarErro = console.error) {
     app.use((erro, req, res, next) => {
         if (erro.type === "entity.parse.failed") return res.status(400).json({ erro: "JSON inválido." });
         if (erro.type === "entity.too.large") return res.status(413).json({ erro: "Dados enviados excedem o tamanho permitido." });
-        if ([400, 404].includes(erro.status)) return res.status(erro.status).json({ erro: erro.message });
+        if ([400, 404, 409].includes(erro.status)) return res.status(erro.status).json({ erro: erro.message });
         if (erro.code === "23503") return res.status(400).json({ erro: "Livro ou Centro não encontrado." });
         // Não envia senha, URL de conexão ou detalhes do SQL para o navegador.
         registrarErro("Falha ao consultar o banco:", erro.code || "SEM_CODIGO");

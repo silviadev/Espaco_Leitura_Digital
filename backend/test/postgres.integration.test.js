@@ -18,6 +18,7 @@ test("acervo persiste obras e cópias atomicamente no PostgreSQL", {
         await admin.query(`CREATE SCHEMA "${schema}"`);
         banco = new pg.Pool({ ...config, options: `-c search_path=${schema}` });
         await banco.query(await readFile(new URL("../database/001_acervo.sql", import.meta.url), "utf8"));
+        await banco.query(await readFile(new URL("../database/002_leitores.sql", import.meta.url), "utf8"));
         servidor = criarApp(banco, () => {}).listen(0, "127.0.0.1");
         await once(servidor, "listening");
         const base = `http://127.0.0.1:${servidor.address().port}`;
@@ -27,6 +28,31 @@ test("acervo persiste obras e cópias atomicamente no PostgreSQL", {
             return { status: r.status, body: await r.json() };
         }
         const obra = { titulo: "Obra de teste", autor: "Autora", categoria: "Literatura", faixaEtaria: "Livre", quantidade: 2, centroId: 1 };
+        const pessoa = { nome: 'Leitora de teste', tipo: 'Aluno', dataNascimento: '2016-10-07',
+            centroId: 1, matriculaCodigo: 'ABC-001', turma: 'Turma A' };
+        const cadastro = await enviar('/api/leitores', 'POST', pessoa);
+        assert.equal(cadastro.status, 201);
+        assert.equal(cadastro.body.dataNascimento, '2016-10-07');
+        assert.equal(typeof cadastro.body.idade, 'number');
+        const leitorId = cadastro.body.id;
+        assert.equal((await enviar(`/api/leitores/${leitorId}`)).body.nome, pessoa.nome);
+        assert.equal((await enviar('/api/leitores', 'POST', { ...pessoa, matriculaCodigo: 'abc-001' })).status, 409);
+        assert.equal((await enviar('/api/leitores', 'POST', { ...pessoa, centroId: 2 })).status, 201);
+        for (let i = 0; i < 2; i++) {
+            assert.equal((await enviar('/api/leitores', 'POST', { ...pessoa, matriculaCodigo: '' })).status, 201);
+        }
+        const alterado = await enviar(`/api/leitores/${leitorId}`, 'PUT', { ...pessoa, status: 'Inativo', dataNascimento: '2015-12-31' });
+        assert.equal(alterado.status, 200);
+        assert.equal(alterado.body.status, 'Inativo');
+        assert.equal(alterado.body.dataNascimento, '2015-12-31');
+        assert.equal(alterado.body.dataCadastro, cadastro.body.dataCadastro);
+        assert.equal((await enviar('/api/leitores')).body.length, 4);
+        assert.equal((await enviar('/api/leitores/99999')).status, 404);
+        assert.equal((await enviar('/api/leitores/99999', 'PUT', pessoa)).status, 404);
+        for (const dados of [{ dataNascimento: '9999-01-01' }, { dataNascimento: '2025-02-29' }, { centroId: 99999 }]) {
+            assert.equal((await enviar('/api/leitores', 'POST', { ...pessoa, matriculaCodigo: null, ...dados })).status, 400);
+        }
+        assert.equal((await enviar('/api/leitores')).body.length, 4);
         const criada = await enviar("/api/livros", "POST", obra);
         assert.equal(criada.status, 201);
         assert.equal(criada.body.exemplares.length, 2);

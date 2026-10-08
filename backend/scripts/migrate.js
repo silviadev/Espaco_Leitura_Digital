@@ -11,15 +11,18 @@ try {
     await conexao.query(`CREATE TABLE IF NOT EXISTS schema_migrations (
         nome text PRIMARY KEY, aplicada_em timestamptz NOT NULL DEFAULT now()
     )`);
-    const nome = "001_acervo.sql";
-    const aplicada = await conexao.query("SELECT nome FROM schema_migrations WHERE nome = $1", [nome]);
-    if (aplicada.rowCount === 0) {
-        const sql = await readFile(new URL(`../database/${nome}`, import.meta.url), "utf8");
-        await conexao.query(sql);
-        await conexao.query("INSERT INTO schema_migrations(nome) VALUES ($1)", [nome]);
+    let total = 0;
+    for (const nome of ["001_acervo.sql", "002_leitores.sql"]) {
+        const aplicada = await conexao.query("SELECT nome FROM schema_migrations WHERE nome = $1", [nome]);
+        if (aplicada.rowCount === 0) {
+            const sql = await readFile(new URL(`../database/${nome}`, import.meta.url), "utf8");
+            await conexao.query(sql);
+            await conexao.query("INSERT INTO schema_migrations(nome) VALUES ($1)", [nome]);
+            total++;
+        }
     }
     await conexao.query("COMMIT");
-    console.log(aplicada.rowCount ? "Banco já atualizado." : "Tabelas do acervo criadas com sucesso.");
+    console.log(total ? `${total} migração(ões) aplicada(s) com sucesso.` : "Banco já atualizado.");
 } catch (erro) {
     if (conexao) await conexao.query("ROLLBACK").catch(() => {});
     console.error("Migração não aplicada. Verifique o banco e backend/.env. Código:", erro.code || "SEM_CODIGO");

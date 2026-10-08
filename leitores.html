@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leitores | Espaço de Leitura Digital</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar d-none d-lg-flex">
+
+        <div class="brand">
+
+            <img
+                src="assets/img/AF_InstitutoJanela_Logo_RGB_VER_NEG1.jpg"
+                alt="Instituto Janela para o Mundo"
+                class="logo-instituto"
+            >
+
+            <div class="system-name">
+
+                <strong>
+                    Espaço de Leitura Digital
+                </strong>
+
+                <span>
+                    Gestão de acervo e empréstimos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item"
+            >
+                <i class="bi bi-grid-1x2-fill"></i>
+                Dashboard
+            </a>
+
+
+            <a
+                href="acervo.html"
+                class="menu-item"
+            >
+                <i class="bi bi-book"></i>
+                Acervo
+            </a>
+
+
+            <a
+                href="leitores.html"
+                class="menu-item active"
+            >
+                <i class="bi bi-people"></i>
+                Leitores
+            </a>
+
+
+            <a
+                href="emprestimos.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-up-right-circle"></i>
+                Empréstimos
+            </a>
+
+
+            <a
+                href="devolucoes.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-down-left-circle"></i>
+                Devoluções
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <span>
+                Instituto Janela para o Mundo
+            </span>
+
+            <small>
+                Espaço de Leitura Digital
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MENU MOBILE
+    ========================== -->
+
+    <div
+        class="offcanvas offcanvas-start sidebar-mobile"
+        tabindex="-1"
+        id="menuMobile"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5>
+                Espaço de Leitura Digital
+            </h5>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+            ></button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <nav class="menu">
+
+                <a
+                    href="dashboard.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+
+
+                <a
+                    href="acervo.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-book"></i>
+                    Acervo
+                </a>
+
+
+                <a
+                    href="leitores.html"
+                    class="menu-item active"
+                >
+                    <i class="bi bi-people"></i>
+                    Leitores
+                </a>
+
+
+                <a
+                    href="emprestimos.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-up-right-circle"></i>
+                    Empréstimos
+                </a>
+
+
+                <a
+                    href="devolucoes.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-down-left-circle"></i>
+                    Devoluções
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button
+                    class="btn btn-menu-mobile d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#menuMobile"
+                >
+                    <i class="bi bi-list"></i>
+                </button>
+
+
+                <div>
+
+                    <h1>
+                        Espaço de Leitura Digital
+                    </h1>
+
+                    <p>
+                        Cadastro e acompanhamento dos leitores.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    SC
+                </div>
+
+                <div class="d-none d-md-block">
+
+                    <strong>
+                        Silvia
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+                <i class="bi bi-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             TÍTULO
+        ========================== -->
+
+        <section class="page-header">
+    <div><span class="page-eyebrow">Biblioteca</span><h2>Leitores</h2>
+        <p>Cadastre e acompanhe as pessoas que participam do espaço de leitura.</p></div>
+    <button id="novoLeitor" class="btn btn-primary-custom" disabled><i class="bi bi-plus-lg" aria-hidden="true"></i> Novo leitor</button>
+</section>
+<p id="avisoLeitores" role="status">Carregando leitores…</p>
+<button id="recarregarLeitores" class="btn btn-secondary-custom mb-3" hidden>Tentar novamente</button>
+<section class="content-card mb-4" aria-label="Filtros de leitores">
+    <div class="row g-3">
+        <div class="col-lg-5"><label for="buscaLeitor" class="form-label">Buscar por nome, matrícula ou turma</label><input id="buscaLeitor" type="search" class="form-control" disabled></div>
+        <div class="col-lg-4"><label for="filtroCentroLeitor" class="form-label">Centro</label><select id="filtroCentroLeitor" class="form-select" disabled><option value="">Todos os Centros</option></select></div>
+        <div class="col-lg-3"><label for="filtroStatusLeitor" class="form-label">Status</label><select id="filtroStatusLeitor" class="form-select" disabled><option value="">Todos</option><option>Ativo</option><option>Inativo</option></select></div>
+    </div>
+</section>
+<section class="content-card">
+    <div class="card-heading"><div><h3>Leitores cadastrados</h3><p id="totalLeitores">Aguardando conexão com o banco.</p></div></div>
+    <div class="table-responsive"><table class="table custom-table align-middle">
+        <caption class="visually-hidden">Cadastro de leitores</caption>
+        <thead><tr><th scope="col">Nome</th><th scope="col">Tipo</th><th scope="col">Matrícula / turma</th><th scope="col">Idade atual</th><th scope="col">Centro</th><th scope="col">Status</th><th scope="col">Ações</th></tr></thead>
+        <tbody id="tabelaLeitores"><tr><td colspan="7">Carregando…</td></tr></tbody>
+    </table></div>
+</section>
+<footer class="footer"><p>© 2026 Instituto Janela para o Mundo · Espaço de Leitura Digital</p></footer>
+</main>
+<div class="modal fade" id="modalLeitor" tabindex="-1" aria-labelledby="tituloFormularioLeitor" aria-hidden="true">
+<div class="modal-dialog modal-lg"><div class="modal-content custom-modal">
+    <div class="modal-header"><h2 class="modal-title fs-5" id="tituloFormularioLeitor">Cadastrar leitor</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+    <form id="formLeitor">
+        <div class="modal-body">
+            <p class="text-secondary">Os campos com * são obrigatórios.</p>
+            <div class="row g-3">
+                <div class="col-md-8"><label for="nomeLeitor" class="form-label">Nome completo *</label><input id="nomeLeitor" class="form-control" maxlength="200" required></div>
+                <div class="col-md-4"><label for="tipoLeitor" class="form-label">Tipo *</label><select id="tipoLeitor" class="form-select" required><option value="">Selecione</option><option>Aluno</option><option>Professor</option><option>Funcionário</option><option>Voluntário</option><option>Comunidade</option></select></div>
+                <div class="col-md-6"><label for="nascimentoLeitor" class="form-label">Data de nascimento *</label><input id="nascimentoLeitor" type="date" min="0001-01-01" class="form-control" required aria-describedby="idadeLeitor"><div id="idadeLeitor" class="form-text" role="status">A idade será calculada automaticamente.</div></div>
+                <div class="col-md-6"><label for="centroLeitor" class="form-label">Centro de Educação *</label><select id="centroLeitor" class="form-select" required><option value="">Selecione o Centro</option></select></div>
+                <div class="col-md-6"><label for="matriculaLeitor" class="form-label">Matrícula / código</label><input id="matriculaLeitor" class="form-control" maxlength="80"><div class="form-text">Opcional. Não pode se repetir no mesmo Centro.</div></div>
+                <div class="col-md-6"><label for="turmaLeitor" class="form-label">Turma</label><input id="turmaLeitor" class="form-control" maxlength="100"></div>
+                <div class="col-md-6"><label for="telefoneLeitor" class="form-label">Telefone</label><input id="telefoneLeitor" type="tel" class="form-control" maxlength="30"></div>
+                <div class="col-md-6"><label for="emailLeitor" class="form-label">E-mail</label><input id="emailLeitor" type="email" class="form-control" maxlength="254"></div>
+                <div class="col-md-6"><label for="statusLeitor" class="form-label">Status *</label><select id="statusLeitor" class="form-select" required><option>Ativo</option><option>Inativo</option></select><div class="form-text">Inativar mantém o cadastro para preservar o histórico.</div></div>
+            </div>
+        </div>
+        <div class="modal-footer flex-column align-items-stretch">
+            <p id="erroLeitor" class="text-danger mb-0" role="alert" tabindex="-1"></p>
+            <div class="d-flex justify-content-end gap-2"><button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancelar</button><button id="salvarLeitor" type="submit" class="btn btn-primary-custom">Cadastrar leitor</button></div>
+        </div>
+    </form>
+</div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="js/leitores.js"></script>
+</body></html>
