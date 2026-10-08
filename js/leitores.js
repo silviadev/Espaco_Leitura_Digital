@@ -57,7 +57,7 @@ function renderizar() {
             linha.insertCell().textContent = valor;
         }
         const botao = document.createElement('button');
-        botao.className = 'btn btn-secondary-custom btn-sm';
+        botao.className = 'btn btn-primary-custom btn-sm';
         botao.textContent = 'Editar';
         botao.setAttribute('aria-label', `Editar ${leitor.nome}`);
         botao.addEventListener('click', () => abrirFormulario(leitor));

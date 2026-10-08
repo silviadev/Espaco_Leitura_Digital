@@ -890,7 +890,7 @@ function preencherDetalhesLivro(livro) {
     const total = livro.exemplares.length;
     const disponiveis = exemplaresDisponiveis(livro).length;
     document.getElementById("detalhesResumoLivro").textContent =
-        `Total: ${total} · Disponíveis: ${disponiveis} · Emprestados: ${exemplaresEmprestados(livro).length}`;
+        `Total cadastrado (inclui baixados): ${total} · Disponíveis: ${disponiveis} · Emprestados: ${exemplaresEmprestados(livro).length} · Baixados: ${livro.exemplares.filter(e => e.status === 'Baixado').length}`;
 
     const lista = document.getElementById("detalhesExemplaresLivro");
     lista.replaceChildren();
@@ -916,13 +916,31 @@ function preencherDetalhesLivro(livro) {
         etiqueta.textContent = exemplar.status || "Não informado";
         celulaStatus.appendChild(etiqueta);
         linha.appendChild(celulaStatus);
+        const acao = document.createElement('td');
+        if (exemplar.status === 'Baixado') {
+            const data = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Fortaleza' }).format(new Date(exemplar.baixaEm));
+            acao.textContent = `${exemplar.baixaMotivo} · ${data}${exemplar.baixaObservacao ? ' · ' + exemplar.baixaObservacao : ''}`;
+            acao.style.whiteSpace = 'normal';
+            acao.style.overflowWrap = 'anywhere';
+        } else if (['Emprestado', 'Reservado'].includes(exemplar.status)) {
+            acao.textContent = 'Baixa bloqueada: empréstimo ou reserva em aberto.';
+        } else {
+            const botao = document.createElement('button');
+            botao.type = 'button';
+            botao.className = 'btn btn-outline-danger btn-sm';
+            botao.textContent = 'Dar baixa';
+            botao.setAttribute('aria-label', `Dar baixa no exemplar ${exemplar.codigo}`);
+            botao.addEventListener('click', () => abrirBaixa(exemplar));
+            acao.append(botao);
+        }
+        linha.append(acao);
         lista.appendChild(linha);
     });
 
     if (total === 0) {
         const linha = document.createElement("tr");
         const celula = document.createElement("td");
-        celula.colSpan = 4;
+        celula.colSpan = 5;
         celula.className = "text-center py-4";
         celula.textContent = "Nenhum exemplar cadastrado para esta obra.";
         linha.appendChild(celula);
@@ -935,6 +953,7 @@ function preencherDetalhesLivro(livro) {
 function visualizarLivro(id) {
     const livro = livros.find(livro => livro.id === id);
     if (!livro) return;
+    document.getElementById('formBaixa').hidden = true;
 
     const form = document.getElementById("formExemplares");
     form.reset();
@@ -958,10 +977,50 @@ function visualizarLivro(id) {
    ADICIONAR EXEMPLARES A UMA OBRA EXISTENTE
 ========================================================= */
 const formExemplares = document.getElementById("formExemplares");
+const formBaixa = document.getElementById('formBaixa');
+
+function abrirBaixa(exemplar) {
+    if (formBaixa.dataset.salvando || formExemplares.dataset.salvando) return;
+    formBaixa.reset();
+    formBaixa.dataset.exemplarId = String(exemplar.id);
+    document.getElementById('observacaoBaixa').required = false;
+    document.getElementById('tituloBaixa').textContent = `Dar baixa no exemplar ${exemplar.codigo}`;
+    document.getElementById('erroBaixa').textContent = '';
+    document.getElementById('sucessoExemplares').textContent = '';
+    formBaixa.hidden = false;
+    document.getElementById('motivoBaixa').focus();
+}
+document.getElementById('motivoBaixa').addEventListener('change', event => {
+    document.getElementById('observacaoBaixa').required = event.target.value === 'Outro';
+});
+document.getElementById('cancelarBaixa').addEventListener('click', () => { formBaixa.hidden = true; });
+formBaixa.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (formBaixa.dataset.salvando || formExemplares.dataset.salvando || !formBaixa.reportValidity()) return;
+    const dados = { motivo: document.getElementById('motivoBaixa').value,
+        observacao: document.getElementById('observacaoBaixa').value.trim() };
+    const id = formBaixa.dataset.exemplarId;
+    const erro = document.getElementById('erroBaixa');
+    erro.textContent = '';
+    bloquearFormulario(formBaixa, true);
+    const botao = formBaixa.querySelector('[type="submit"]');
+    botao.textContent = 'Salvando…';
+    try {
+        const livro = await requisitarApi(`/exemplares/${id}/baixa`, 'POST', dados);
+        atualizarObraNaTela(livro);
+        preencherDetalhesLivro(livro);
+        formBaixa.hidden = true;
+        document.getElementById('sucessoExemplares').textContent = 'Baixa registrada. O exemplar foi preservado no histórico.';
+    } catch (falha) { erro.textContent = falha.message; erro.focus(); }
+    finally { bloquearFormulario(formBaixa, false); botao.textContent = 'Confirmar baixa'; }
+});
+document.getElementById('modalDetalhesLivro').addEventListener('hide.bs.modal', event => {
+    if (formBaixa.dataset.salvando) event.preventDefault();
+});
 
 formExemplares.addEventListener("submit", async function (event) {
     event.preventDefault();
-    if (formExemplares.dataset.salvando) return;
+    if (formExemplares.dataset.salvando || formBaixa.dataset.salvando) return;
     const erro = document.getElementById("erroExemplares");
     const sucesso = document.getElementById("sucessoExemplares");
     erro.textContent = "";

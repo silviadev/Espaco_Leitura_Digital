@@ -19,6 +19,7 @@ test("acervo persiste obras e cópias atomicamente no PostgreSQL", {
         banco = new pg.Pool({ ...config, options: `-c search_path=${schema}` });
         await banco.query(await readFile(new URL("../database/001_acervo.sql", import.meta.url), "utf8"));
         await banco.query(await readFile(new URL("../database/002_leitores.sql", import.meta.url), "utf8"));
+        await banco.query(await readFile(new URL("../database/003_baixa_exemplares.sql", import.meta.url), "utf8"));
         servidor = criarApp(banco, () => {}).listen(0, "127.0.0.1");
         await once(servidor, "listening");
         const base = `http://127.0.0.1:${servidor.address().port}`;
@@ -74,6 +75,28 @@ test("acervo persiste obras e cópias atomicamente no PostgreSQL", {
         const final = (await enviar(`/api/livros/${id}`)).body;
         assert.equal(final.exemplares.length, 6);
         assert.equal(new Set(final.exemplares.map(e => e.codigo)).size, 6);
+        const emprestado = final.exemplares.find(e => e.status === 'Emprestado');
+        const livres = final.exemplares.filter(e => e.status === 'Disponível');
+        const baixar = (eid, dados) => enviar(`/api/exemplares/${eid}/baixa`, 'POST', dados);
+        assert.equal((await baixar(emprestado.id, { motivo: 'Perda' })).status, 409);
+        await banco.query("UPDATE exemplares SET status='Reservado' WHERE id=$1", [livres[0].id]);
+        assert.equal((await baixar(livres[0].id, { motivo: 'Doação' })).status, 409);
+        for (const dados of [{ motivo: 'Outro' }, { motivo: 'Outro', observacao: ' ' }, { motivo: 'Inválido' }, { motivo: 'Perda', observacao: 'a'.repeat(2001) }]) {
+            assert.equal((await baixar(livres[1].id, dados)).status, 400);
+        }
+        assert.equal((await baixar(99999, { motivo: 'Perda' })).status, 404);
+        const simultaneas = await Promise.all([baixar(livres[1].id, { motivo: 'Doação', observacao: 'Destino de teste' }), baixar(livres[1].id, { motivo: 'Perda' })]);
+        assert.deepEqual(simultaneas.map(r => r.status).sort(), [200, 409]);
+        const depois = (await enviar(`/api/livros/${id}`)).body;
+        assert.equal(depois.exemplares.length, 6);
+        const baixado = depois.exemplares.find(e => e.id === livres[1].id);
+        assert.equal(baixado.status, 'Baixado');
+        assert.ok(baixado.baixaEm);
+        assert.equal((await baixar(baixado.id, { motivo: 'Outro', observacao: 'Não sobrescrever' })).status, 409);
+        assert.deepEqual((await enviar(`/api/livros/${id}`)).body.exemplares.find(e => e.id === baixado.id), baixado);
+        for (const [indice, motivo] of [[2, 'Dano/rasuras'], [3, 'Outro'], [4, 'Perda']]) {
+            assert.equal((await baixar(livres[indice].id, { motivo, observacao: 'Teste' })).status, 200);
+        }
 
         // Centro inexistente falha depois do INSERT da obra: a transação deve desfazê-lo.
         assert.equal((await enviar("/api/livros", "POST", { ...obra, centroId: 99999 })).status, 400);

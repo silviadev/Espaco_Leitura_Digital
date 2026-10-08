@@ -1006,6 +1006,19 @@
                                 </div>
                             </form>
                         </details>
+                        <form id="formBaixa" class="border rounded p-3 mb-3" hidden>
+                            <h4 class="fs-6" id="tituloBaixa">Dar baixa no exemplar</h4>
+                            <p>O exemplar ficará indisponível. Seu cadastro e histórico serão preservados. Esta tela não permite desfazer a baixa.</p>
+                            <label for="motivoBaixa" class="form-label">Motivo *</label>
+                            <select id="motivoBaixa" class="form-select mb-3" required>
+                                <option value="">Selecione</option><option>Perda</option><option>Dano/rasuras</option><option>Doação</option><option>Outro</option>
+                            </select>
+                            <label for="observacaoBaixa" class="form-label">Observação (obrigatória para Outro)</label>
+                            <textarea id="observacaoBaixa" class="form-control" maxlength="2000" rows="3"></textarea>
+                            <p id="erroBaixa" class="text-danger mt-2" role="alert" tabindex="-1"></p>
+                            <button type="submit" class="btn btn-danger">Confirmar baixa</button>
+                            <button type="button" id="cancelarBaixa" class="btn btn-secondary-custom">Cancelar</button>
+                        </form>
                         <p id="sucessoExemplares" class="text-success" role="status"></p>
                         <div class="table-responsive" role="region" aria-label="Lista de exemplares" tabindex="0">
                             <table class="table align-middle detalhes-tabela">
@@ -1016,6 +1029,7 @@
                                         <th scope="col">Centro</th>
                                         <th scope="col">Localização</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Baixa / ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="detalhesExemplaresLivro"></tbody>

@@ -9,7 +9,8 @@ export function criarRepositorioAcervo(banco) {
                    jsonb_agg(jsonb_build_object(
                        'id', e.id, 'codigo', e.codigo,
                        'centroId', c.id, 'centro', c.nome,
-                       'localizacao', e.localizacao, 'status', e.status
+                       'localizacao', e.localizacao, 'status', e.status,
+                       'baixaMotivo', e.baixa_motivo, 'baixaObservacao', e.baixa_observacao, 'baixaEm', e.baixa_em
                    ) ORDER BY e.id) FILTER (WHERE e.id IS NOT NULL),
                    '[]'::jsonb
                ) AS exemplares
@@ -44,6 +45,21 @@ export function criarRepositorioAcervo(banco) {
     const valoresObra = d => [d.titulo, d.autor, d.isbn, d.editora, d.ano, d.categoria, d.faixaEtaria, d.capaUrl, d.sinopse];
 
     return {
+        async baixarExemplar(id, dados) {
+            return transacao(async conexao => {
+                // O bloqueio impede duas baixas simultâneas de sobrescreverem o motivo.
+                const resultado = await conexao.query('SELECT livro_id, status FROM exemplares WHERE id=$1 FOR UPDATE', [id]);
+                const exemplar = resultado.rows[0];
+                if (!exemplar) throw erroHttp(404, 'Exemplar não encontrado.');
+                if (exemplar.status === 'Baixado') throw erroHttp(409, 'Este exemplar já recebeu baixa.');
+                if (['Emprestado', 'Reservado'].includes(exemplar.status)) {
+                    throw erroHttp(409, 'Encerre o empréstimo ou a reserva antes de dar baixa neste exemplar.');
+                }
+                await conexao.query(`UPDATE exemplares SET status='Baixado', baixa_motivo=$2,
+                    baixa_observacao=$3, baixa_em=now() WHERE id=$1`, [id, dados.motivo, dados.observacao]);
+                return criarRepositorioAcervo(conexao).buscarLivro(exemplar.livro_id);
+            });
+        },
         async criarLivro(dados, exemplares) {
             return transacao(async conexao => {
                 const resultado = await conexao.query(`INSERT INTO livros

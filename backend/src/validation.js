@@ -1,5 +1,12 @@
 import { dataCivilValida, hojeCivil } from '../../js/datas.mjs';
 
+export function validarBaixa(body) {
+    if (!body || !['Perda', 'Dano/rasuras', 'Doação', 'Outro'].includes(body.motivo)) {
+        throw erroHttp(400, 'Selecione um motivo válido para a baixa.');
+    }
+    return { motivo: body.motivo, observacao: texto(body.observacao, 'Observação', body.motivo === 'Outro', 2000) };
+}
+
 export function erroHttp(status, mensagem) {
     return Object.assign(new Error(mensagem), { status });
 }

@@ -2,7 +2,7 @@ import express from "express";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { criarRepositorioAcervo } from "./repositories/acervo.js";
-import { validarObra, validarExemplares, validarLeitor } from "./validation.js";
+import { validarObra, validarExemplares, validarLeitor, validarBaixa } from "./validation.js";
 import { criarRepositorioLeitores } from './repositories/leitores.js';
 
 // Receber o banco como argumento permite testar as rotas sem um PostgreSQL instalado.
@@ -61,6 +61,9 @@ export function criarApp(banco, registrarErro = console.error) {
     });
 
     app.get('/api/leitores', async (req, res) => res.json(await leitores.listar()));
+    app.post('/api/exemplares/:id/baixa', async (req, res) => {
+        res.json(await acervo.baixarExemplar(Number(req.params.id), validarBaixa(req.body)));
+    });
     app.get('/api/leitores/:id', async (req, res) => {
         const leitor = await leitores.buscar(Number(req.params.id));
         if (!leitor) return res.status(404).json({ erro: 'Leitor não encontrado.' });
