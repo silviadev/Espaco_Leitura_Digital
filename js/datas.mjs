@@ -19,3 +19,10 @@ export function calcularIdade(nascimento, hoje = hojeCivil()) {
     return Number(hoje.slice(0, 4)) - Number(nascimento.slice(0, 4))
         - (hoje.slice(5) < nascimento.slice(5) ? 1 : 0);
 }
+
+export function somarDias(dataCivil, dias) {
+    if (!dataCivilValida(dataCivil) || !Number.isInteger(dias)) throw new Error('Data ou quantidade de dias inválida.');
+    const data = new Date(`${dataCivil}T00:00:00Z`);
+    data.setUTCDate(data.getUTCDate() + dias);
+    return data.toISOString().slice(0, 10);
+}

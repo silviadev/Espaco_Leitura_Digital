@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Devoluções | Espaço de Leitura Digital</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar d-none d-lg-flex">
+
+        <div class="brand">
+
+            <img
+                src="assets/img/AF_InstitutoJanela_Logo_RGB_VER_NEG1.jpg"
+                alt="Instituto Janela para o Mundo"
+                class="logo-instituto"
+            >
+
+            <div class="system-name">
+
+                <strong>
+                    Espaço de Leitura Digital
+                </strong>
+
+                <span>
+                    Gestão de acervo e empréstimos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="dashboard.html"
+                class="menu-item"
+            >
+                <i class="bi bi-grid-1x2-fill"></i>
+                Dashboard
+            </a>
+
+
+            <a
+                href="acervo.html"
+                class="menu-item"
+            >
+                <i class="bi bi-book"></i>
+                Acervo
+            </a>
+
+
+            <a
+                href="leitores.html"
+                class="menu-item"
+            >
+                <i class="bi bi-people"></i>
+                Leitores
+            </a>
+
+
+            <a
+                href="emprestimos.html"
+                class="menu-item"
+            >
+                <i class="bi bi-arrow-up-right-circle"></i>
+                Empréstimos
+            </a>
+
+
+            <a
+                href="devolucoes.html"
+                class="menu-item active"
+            >
+                <i class="bi bi-arrow-down-left-circle"></i>
+                Devoluções
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <span>
+                Instituto Janela para o Mundo
+            </span>
+
+            <small>
+                Espaço de Leitura Digital
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MENU MOBILE
+    ========================== -->
+
+    <div
+        class="offcanvas offcanvas-start sidebar-mobile"
+        tabindex="-1"
+        id="menuMobile"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5>
+                Espaço de Leitura Digital
+            </h5>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas"
+            ></button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <nav class="menu">
+
+                <a
+                    href="dashboard.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+
+
+                <a
+                    href="acervo.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-book"></i>
+                    Acervo
+                </a>
+
+
+                <a
+                    href="leitores.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-people"></i>
+                    Leitores
+                </a>
+
+
+                <a
+                    href="emprestimos.html"
+                    class="menu-item"
+                >
+                    <i class="bi bi-arrow-up-right-circle"></i>
+                    Empréstimos
+                </a>
+
+
+                <a
+                    href="devolucoes.html"
+                    class="menu-item active"
+                >
+                    <i class="bi bi-arrow-down-left-circle"></i>
+                    Devoluções
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button
+                    class="btn btn-menu-mobile d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#menuMobile"
+                >
+                    <i class="bi bi-list"></i>
+                </button>
+
+
+                <div>
+
+                    <h1>
+                        Espaço de Leitura Digital
+                    </h1>
+
+                    <p>
+                        Recebimento de exemplares e histórico de devoluções.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    SC
+                </div>
+
+                <div class="d-none d-md-block">
+
+                    <strong>
+                        Silvia
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+                <i class="bi bi-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             TÍTULO
+        ========================== -->
+
+        <section class="page-header"><div><span class="page-eyebrow">Biblioteca</span><h2>Devoluções</h2><p>Localize o empréstimo e confira o exemplar antes de registrar o recebimento.</p></div></section>
+<p id="avisoDevolucoes" role="status">Carregando empréstimos…</p>
+<button id="atualizarDevolucoes" class="btn btn-secondary-custom mb-3">Atualizar lista</button>
+<section class="content-card mb-4" aria-label="Filtros de devoluções"><div class="row g-3">
+<div class="col-md-8"><label for="buscaDevolucao" class="form-label">Buscar código do exemplar, livro, leitor ou matrícula</label><input id="buscaDevolucao" class="form-control" type="search" disabled></div>
+<div class="col-md-4"><label for="filtroDevolucao" class="form-label">Exibir</label><select id="filtroDevolucao" class="form-select" disabled><option value="pendentes">Aguardando devolução</option><option value="atrasados">Atrasados</option><option value="devolvidos">Histórico de devoluções</option><option value="todos">Todos</option></select></div>
+</div></section>
+<section class="content-card"><div class="card-heading"><div><h3>Controle de devoluções</h3><p id="resumoDevolucoes">Aguardando conexão.</p></div></div>
+<div class="table-responsive"><table class="table custom-table align-middle"><caption class="visually-hidden">Empréstimos pendentes e devoluções registradas</caption>
+<thead><tr><th scope="col">Leitor</th><th scope="col">Livro / exemplar</th><th scope="col">Prazo</th><th scope="col">Devolução</th><th scope="col">Situação / atraso</th><th scope="col">Ações</th></tr></thead><tbody id="tabelaDevolucoes"><tr><td colspan="6">Carregando…</td></tr></tbody></table></div></section>
+<footer class="footer"><p>© 2026 Instituto Janela para o Mundo · Espaço de Leitura Digital</p></footer></main>
+<div class="modal fade" id="modalDevolucao" tabindex="-1" aria-labelledby="tituloDevolucao" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content custom-modal">
+<div class="modal-header"><h2 id="tituloDevolucao" class="modal-title fs-5">Registrar devolução</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar devolução"></button></div>
+<form id="formDevolucao"><div class="modal-body">
+<p id="identificacaoDevolucao" class="fw-semibold"></p><p id="datasDevolucao"></p><p id="situacaoDevolucao" role="status"></p>
+<div id="camposDevolucao">
+<p>Confirme o recebimento da cópia física. A data será registrada automaticamente.</p>
+<label for="condicaoDevolucao" class="form-label">Condição do exemplar *</label><select id="condicaoDevolucao" class="form-select mb-3" required><option value="">Selecione após conferir o exemplar</option><option value="Disponível">Em boas condições — disponível para novo empréstimo</option><option value="Danificado">Danificado — manter indisponível</option></select>
+<label for="observacaoDevolucao" class="form-label">Observação (obrigatória para exemplar danificado)</label><textarea id="observacaoDevolucao" class="form-control" rows="3" maxlength="2000"></textarea>
+<p id="efeitoDevolucao" class="form-text">A devolução libera uma vaga no limite de 5 exemplares do leitor.</p>
+</div>
+<div id="historicoDevolucao" hidden><h3 class="fs-6">Registro do recebimento</h3><p id="condicaoRegistrada"></p><p id="observacaoRegistrada"></p><p id="momentoRegistrado"></p></div>
+<p id="erroDevolucao" class="text-danger mt-3" role="alert" tabindex="-1"></p>
+</div><div class="modal-footer"><button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Fechar</button><button id="confirmarDevolucao" type="submit" class="btn btn-primary-custom">Confirmar devolução</button></div></form>
+</div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script><script type="module" src="js/devolucoes.js"></script></body></html>

@@ -20,9 +20,9 @@ Um livro pode possuir cópias em vários Centros. Por isso, `centro_id` pertence
 
 O banco gera os identificadores e códigos `EX-0001`, `EX-0002` etc. Não usamos um contador do navegador, que poderia gerar códigos repetidos com várias pessoas cadastrando ao mesmo tempo. Códigos podem ter intervalos após uma transação cancelada; isso é normal. A expressão também preserva códigos com mais de quatro dígitos.
 
-Os status físicos previstos são Disponível, Emprestado, Reservado, Danificado e Perdido. Indisponível é uma classificação geral calculada da obra. A presença de Reservado no modelo não implementa o fluxo de reservas.
+Os status físicos previstos são Disponível, Emprestado, Reservado, Danificado, Perdido e Baixado. Indisponível é uma classificação geral calculada da obra. A presença de Reservado no modelo não implementa o fluxo de reservas.
 
-ISBN é opcional e não tem restrição de unicidade nesta etapa, para não assumir uma regra sobre edições ainda não validada. Categorias e faixas etárias permanecem textuais por enquanto. Leitores, usuários, permissões e empréstimos terão suas próprias migrações depois; não há regras de prazo ou limite de empréstimos fixadas aqui.
+ISBN é opcional e não tem restrição de unicidade nesta etapa. Categorias e faixas etárias permanecem textuais por enquanto. Leitores e empréstimos já têm migrações próprias; usuários e permissões serão implementados depois. Empréstimos usam prazo de 15 dias corridos e limite de 5 exemplares simultâneos por leitor. Consulte `EMPRESTIMOS.md` para entender as renovações e o fluxo do código.
 
 ## Organização e fluxo
 

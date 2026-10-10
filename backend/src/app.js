@@ -4,12 +4,15 @@ import path from "node:path";
 import { criarRepositorioAcervo } from "./repositories/acervo.js";
 import { validarObra, validarExemplares, validarLeitor, validarBaixa } from "./validation.js";
 import { criarRepositorioLeitores } from './repositories/leitores.js';
+import { criarRepositorioEmprestimos } from './repositories/emprestimos.js';
+import { validarEmprestimo, validarRenovacao, validarDevolucao } from './validation.js';
 
 // Receber o banco como argumento permite testar as rotas sem um PostgreSQL instalado.
 export function criarApp(banco, registrarErro = console.error) {
     const app = express();
     const acervo = criarRepositorioAcervo(banco);
     const leitores = criarRepositorioLeitores(banco);
+    const emprestimos = criarRepositorioEmprestimos(banco);
     app.disable("x-powered-by");
     app.use("/api", (req, res, next) => {
         res.set("Cache-Control", "no-store");
@@ -75,6 +78,24 @@ export function criarApp(banco, registrarErro = console.error) {
     });
     app.put('/api/leitores/:id', async (req, res) => {
         res.json(await leitores.salvar(validarLeitor(req.body), Number(req.params.id)));
+    });
+
+    app.get('/api/emprestimos/opcoes', async (req, res) => res.json(await emprestimos.opcoes()));
+    app.get('/api/emprestimos', async (req, res) => res.json(await emprestimos.listar()));
+    app.get('/api/emprestimos/:id', async (req, res) => {
+        const emprestimo = await emprestimos.buscar(Number(req.params.id));
+        if (!emprestimo) return res.status(404).json({ erro: 'Empréstimo não encontrado.' });
+        res.json(emprestimo);
+    });
+    app.post('/api/emprestimos', async (req, res) => {
+        const emprestimo = await emprestimos.criar(validarEmprestimo(req.body));
+        res.status(201).location(`/api/emprestimos/${emprestimo.id}`).json(emprestimo);
+    });
+    app.post('/api/emprestimos/:id/renovacoes', async (req, res) => {
+        res.json(await emprestimos.renovar(Number(req.params.id), validarRenovacao(req.body)));
+    });
+    app.post('/api/emprestimos/:id/devolucao', async (req, res) => {
+        res.json(await emprestimos.devolver(Number(req.params.id), validarDevolucao(req.body)));
     });
 
     // Servimos apenas os arquivos públicos. Nunca expor a raiz ou backend/.env.
