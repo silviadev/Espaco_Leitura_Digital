@@ -104,7 +104,7 @@ export function criarApp(banco, registrarErro = console.error) {
     // Servimos apenas os arquivos públicos. Nunca expor a raiz ou backend/.env.
     const raiz = fileURLToPath(new URL("../../", import.meta.url));
     app.get("/", (req, res) => res.redirect("/acervo.html"));
-    for (const pagina of ["acervo", "dashboard", "leitores", "emprestimos", "devolucoes"]) {
+    for (const pagina of ["acervo", "biblioteca", "dashboard", "leitores", "emprestimos", "devolucoes"]) {
         app.get(`/${pagina}.html`, (req, res) => res.sendFile(path.join(raiz, `${pagina}.html`)));
     }
     for (const pasta of ["css", "js", "assets"]) {
